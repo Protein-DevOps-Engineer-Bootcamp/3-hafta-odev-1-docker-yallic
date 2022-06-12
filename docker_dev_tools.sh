@@ -7,6 +7,7 @@ OPTS=$(getopt --options $SHORT --longoptions $LONG -- "$@")
 
 eval set -- "$OPTS"
 
+containername="None"
 registry="None"
 memory=0
 cpu=0
@@ -102,12 +103,12 @@ then
 
   # Only the name variable is checked in this section because the memory and cpu variables' default value is 0.
   # When the default value is 0, docker ignores to -m and --cpus parameters thus we don't need to extra if else statement
-  if [ $name = "None"]
+  if [ $containername = "None" ]
   then
-    docker run it -d  $containername  -m $memory --cpus=$cpu $imagename:$imagetag
+    docker run -it  -m $memory --cpus=$cpu $imagename:$imagetag
 
   else
-    docker run it -d  $containername  -m $memory --cpus=$cpu --name $name $imagename:$imagetag
+    docker run -it   -m $memory --cpus=$cpu --name $containername  $imagename:$imagetag
   fi
 
 ## Deploy Mode
